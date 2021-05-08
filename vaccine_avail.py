@@ -71,7 +71,7 @@ def get_availability_by_dist(days: int, district_ids: List[int],
                 else:
                     all_date_df = df
 
-    if all_date_df is not None:
+    if len(all_date_df):
         all_date_df = all_date_df.drop(["block_name"], axis=1).sort_values(
             ["date", "min_age_limit", "district_name", "available_capacity"],
             ascending=[True, True, True, False])
@@ -300,9 +300,10 @@ if __name__ == "__main__":
         send_email(availability_data, min_age_limit, "deepacks@gmail.com")
         send_email(availability_data, min_age_limit, "sarahagrawal@gmail.com")
     except Exception as e:
+        print("Received exception %s \n" % e)
         send_error_email(e, "deepacks@gmail.com")
-    # send_email(availability_data, min_age_limit, "riteshnytime@gmail.com")
 
+    # send_email(availability_data, min_age_limit, "riteshnytime@gmail.com")
     if len(sys.argv) > 1:
         if sys.argv[1] == "test_email":
             send_test_email("deepacks@gmail.com")
