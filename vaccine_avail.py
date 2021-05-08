@@ -18,7 +18,10 @@ from geo_dist import GeoLocation
 @cachetools.func.ttl_cache(maxsize=100, ttl=30 * 60)
 @retry(KeyError, tries=5, delay=2)
 def get_data(URL):
-    response = requests.get(URL, timeout=3)
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' +
+               'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93' +
+               'Safari/537.36 Edg/90.0.818.51'}
+    response = requests.get(URL, headers=headers, timeout=3)
     if response.status_code != 200:
         return (False, response.status_code)
     # print(response.text)
@@ -272,7 +275,7 @@ if __name__ == "__main__":
     dist_ids = [BBMP, Bangalore_Rural, Bangalore_Urban]
     pincodes = [560076, 560078]
     next_n_days = 10
-    min_age_limit = 45
+    min_age_limit = 18
     # coord's of our house (J P nagar bangalore)
     current_lat = float(os.environ["CURRENT_LAT"])
     current_long = float(os.environ["CURRENT_LONG"])
