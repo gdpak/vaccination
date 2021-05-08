@@ -70,7 +70,6 @@ def get_availability_by_dist(days: int, district_ids: List[int],
                     all_date_df = pd.concat([all_date_df, df])
                 else:
                     all_date_df = df
-
     if len(all_date_df):
         all_date_df = all_date_df.drop(["block_name"], axis=1).sort_values(
             ["date", "min_age_limit", "district_name", "available_capacity"],
@@ -78,10 +77,11 @@ def get_availability_by_dist(days: int, district_ids: List[int],
         all_date_df = all_date_df[all_date_df.min_age_limit <= min_age_limit]
         all_date_df = all_date_df[all_date_df.available_capacity > 0]
         if geolocation_filter:
-            all_date_df["dist"] = all_date_df.apply(
-                lambda x: gl.calculate_dist(
-                    x["lat"], x["long"], max_dist), axis=1)
-            all_date_df = all_date_df[all_date_df["dist"]]
+            if len(all_date_df):
+                all_date_df["dist"] = all_date_df.apply(
+                    lambda x: gl.calculate_dist(
+                        x["lat"], x["long"], max_dist), axis=1)
+                all_date_df = all_date_df[all_date_df["dist"]]
 
         return True, all_date_df
     return False, error_str
@@ -296,14 +296,16 @@ if __name__ == "__main__":
             # email errors
             send_error_email(availability_data, "deepacks@gmail.com")
             exit()
-        print(availability_data)
-        send_email(availability_data, min_age_limit, "deepacks@gmail.com")
-        send_email(availability_data, min_age_limit, "sarahagrawal@gmail.com")
+        if len(availability_data):
+            send_email(availability_data, min_age_limit,
+                        "deepacks@gmail.com")
+            send_email(availability_data, min_age_limit,
+                        "sarahagrawal@gmail.com")
+            send_email(availability_data, min_age_limit,
+                        "riteshnytime@gmail.com")
     except Exception as e:
-        print("Received exception %s \n" % e)
+        print("Received Exception %s while executing script" % e)
         send_error_email(e, "deepacks@gmail.com")
-
-    # send_email(availability_data, min_age_limit, "riteshnytime@gmail.com")
     if len(sys.argv) > 1:
         if sys.argv[1] == "test_email":
             send_test_email("deepacks@gmail.com")
