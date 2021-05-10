@@ -76,6 +76,8 @@ def get_availability_by_dist(days: int, district_ids: List[int],
             ascending=[True, True, True, False])
         all_date_df = all_date_df[all_date_df.min_age_limit <= min_age_limit]
         all_date_df = all_date_df[all_date_df.available_capacity > 0]
+        all_date_df = all_date_df[all_date_df.vaccine.str.lower().isin(
+            ['covaxin'])]
         if geolocation_filter:
             if len(all_date_df):
                 all_date_df["dist"] = all_date_df.apply(
@@ -275,7 +277,7 @@ if __name__ == "__main__":
     dist_ids = [BBMP, Bangalore_Rural, Bangalore_Urban]
     pincodes = [560076, 560078]
     next_n_days = 10
-    min_age_limit = 18
+    min_age_limit = 45
     # coord's of our house (J P nagar bangalore)
     current_lat = float(os.environ["CURRENT_LAT"])
     current_long = float(os.environ["CURRENT_LONG"])
@@ -298,11 +300,11 @@ if __name__ == "__main__":
             exit()
         if len(availability_data):
             send_email(availability_data, min_age_limit,
-                        "deepacks@gmail.com")
+                       "deepacks@gmail.com")
             send_email(availability_data, min_age_limit,
-                        "sarahagrawal@gmail.com")
+                       "sarahagrawal@gmail.com")
             send_email(availability_data, min_age_limit,
-                        "riteshnytime@gmail.com")
+                       "riteshnytime@gmail.com")
     except Exception as e:
         print("Received Exception %s while executing script" % e)
         send_error_email(e, "deepacks@gmail.com")
