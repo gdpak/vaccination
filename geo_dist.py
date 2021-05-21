@@ -23,10 +23,8 @@ class GeoLocation:
              math.sin(dlon/2) * math.sin(dlon/2) *
              math.cos(lat1) * math.cos(lat2))
         c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
-        '''
         print("loc1=(%s, %s) loc2=(%s, %s), dist=%s" % (
             self.mylat, self.mylang, lat, lang, c * earth_radius))
-        '''
         if earth_radius * c < max_dist:
             return True
         else:
@@ -42,4 +40,6 @@ if __name__ == "__main__":
     d = gl.calculate_dist(12.944093577762436, 77.69604881493385, 5)
     print(d)
     d = gl.calculate_dist(12, 77, 5)
+    print(d)
+    d = gl.calculate_dist(13, 77, 5)
     print(d)

@@ -3,6 +3,8 @@ echo "SENDER_EMAIL before export is: <$SENDER_EMAIL>"
 
 export SENDER_PASSWORD="TODO: #FIXME"
 export SENDER_EMAIL="FIXME: actual email"
+export TWILIO_ACCOUNT_SID="FIXME:"
+export TWILIO_AUTH_TOKEN="FIXME"
 echo "SENDER_EMAIL after export is: <$SENDER_EMAIL>"
 export PATH="/home/ec2-user/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
