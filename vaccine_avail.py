@@ -301,13 +301,15 @@ if __name__ == "__main__":
         if len(availability_data):
             send_email(availability_data, min_age_limit,
                        "deepacks@gmail.com")
-            send_email(availability_data, min_age_limit,
-                       "sarahagrawal@gmail.com")
-            send_email(availability_data, min_age_limit,
-                       "riteshnytime@gmail.com")
+            '''send_email(availability_data, min_age_limit,
+                        "sarahagrawal@gmail.com")
+            '''
+            '''send_email(availability_data, min_age_limit,
+                        "riteshnytime@gmail.com")
+            '''
     except Exception as e:
         print("Received Exception %s while executing script" % e)
-        send_error_email(e, "deepacks@gmail.com")
+        #send_error_email(e, "deepacks@gmail.com")
     if len(sys.argv) > 1:
         if sys.argv[1] == "test_email":
             send_test_email("deepacks@gmail.com")
